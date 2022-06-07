@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "719187874444",
+    "project_id": "markapp-f4bc7",
+    "storage_bucket": "markapp-f4bc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719187874444:android:13eb36bba756691bdea1a9",
+        "android_client_info": {
+          "package_name": "com.usama.services_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719187874444-q0s5cenmp4ot4e4thll7c1ehdcfcedjg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.usama.services_app",
+            "certificate_hash": "9f3f998e28ffb1216bc869b9c3438f9548733f14"
+          }
+        },
+        {
+          "client_id": "719187874444-bq6pag4bjourcb6rrns0q30bleo9n46q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTLQ1Z1pPDIK6wlbmXNGvxteZ-XIeNWa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719187874444-bq6pag4bjourcb6rrns0q30bleo9n46q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
