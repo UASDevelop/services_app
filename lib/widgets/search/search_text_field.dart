@@ -18,7 +18,6 @@ class SearchTextField extends StatelessWidget {
     required this.icon,
     this.maxLength,
     this.onChanged,
-
   }) : super(key: key);
 
   TextEditingController? textEditingController;
@@ -31,7 +30,6 @@ class SearchTextField extends StatelessWidget {
   IconData icon;
   int? maxLength;
   Function? onChanged;
-
   @override
   Widget build(BuildContext context) {
     return Column(

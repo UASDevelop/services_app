@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -7,17 +6,14 @@ import 'package:services_app/utils/my_colors.dart';
 import 'package:services_app/widgets/mark/coin_number.dart';
 import 'package:services_app/widgets/my_text.dart';
 
-
 class DoctorListItem extends StatelessWidget {
-
-
   DoctorListItem({
     required this.user,
     required this.onClick,
     required this.onPointSelect,
     required this.onFilterClick,
     required this.point,
-});
+  });
 
   MyUser.User user;
   int point;
@@ -31,7 +27,9 @@ class DoctorListItem extends StatelessWidget {
       width: double.infinity,
       height: 120,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(15),),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(15),
+        ),
         color: MyColors.grey300,
       ),
       child: Padding(
@@ -44,16 +42,24 @@ class DoctorListItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // image
-            GestureDetector(
-                onTap: (){
-
-
-Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imageProvider: user.image != null && user.image!.isNotEmpty? NetworkImage(user.image!) : const AssetImage(
-                      "assets/images/image_placeholder.png",
-                    ) as ImageProvider,)));
-                },
-                child: buildImage()),
-                const SizedBox(width: 15,),
+                GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PhotoView(
+                                    imageProvider: user.image != null &&
+                                            user.image!.isNotEmpty
+                                        ? NetworkImage(user.image!)
+                                        : const AssetImage(
+                                            "assets/images/image_placeholder.png",
+                                          ) as ImageProvider,
+                                  )));
+                    },
+                    child: buildImage()),
+                const SizedBox(
+                  width: 15,
+                ),
                 // name, tag, coins selection
                 Flexible(
                   child: Column(
@@ -62,31 +68,44 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
                     children: [
                       // name
                       MyText(
-                        text: user.name != null? user.name! : "",
+                        text: user.name != null ? user.name! : "",
                         size: 16,
                         color: MyColors.black,
                         fontWeight: FontWeight.w700,
                         maxLines: 1,
                         textOverflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 5,),
-                      // tag
-                      user.company == null? const SizedBox(width: 0, height: 0,) : Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(5),),
-                          color: MyColors.primaryColor,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          child: MyText(
-                            text: user.company != null? user.company! : "",
-                            color: MyColors.white,
-                            fontFamilty: "Roboto",
-                            size: 12,
-                          ),
-                        ),
+                      const SizedBox(
+                        height: 5,
                       ),
-                      const SizedBox(height: 10,),
+                      // tag
+                      user.company == null
+                          ? const SizedBox(
+                              width: 0,
+                              height: 0,
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(5),
+                                ),
+                                color: MyColors.primaryColor,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                child: MyText(
+                                  text:
+                                      user.company != null ? user.company! : "",
+                                  color: MyColors.white,
+                                  fontFamilty: "Roboto",
+                                  size: 12,
+                                ),
+                              ),
+                            ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       // build coins (numbers)
                       buildCoinNumbers(),
                     ],
@@ -123,12 +142,16 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
       width: 90,
       height: 90,
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10),),
+        borderRadius: const BorderRadius.all(
+          Radius.circular(10),
+        ),
         image: DecorationImage(
-          image: user.image != null && user.image!.isNotEmpty? NetworkImage(user.image!) : const AssetImage(
-            "assets/images/image_placeholder.png",
-          ) as ImageProvider,
-            fit: BoxFit.cover,
+          image: user.image != null && user.image!.isNotEmpty
+              ? NetworkImage(user.image!)
+              : const AssetImage(
+                  "assets/images/image_placeholder.png",
+                ) as ImageProvider,
+          fit: BoxFit.cover,
         ),
       ),
     );
@@ -146,7 +169,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
             onPointSelect(0);
           },
           number: 0,
-          isSelected: point == 0? true : false,
+          isSelected: point == 0 ? true : false,
         ),
         //const SizedBox(width: 8,),
         // 1
@@ -156,7 +179,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
             onPointSelect(1);
           },
           number: 1,
-          isSelected: point == 1? true : false,
+          isSelected: point == 1 ? true : false,
         ),
         //const SizedBox(width: 8,),
         // 2
@@ -166,7 +189,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
             onPointSelect(2);
           },
           number: 2,
-          isSelected: point == 2? true : false,
+          isSelected: point == 2 ? true : false,
         ),
         //const SizedBox(width: 8,),
         // 3
@@ -176,7 +199,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
             onPointSelect(3);
           },
           number: 3,
-          isSelected: point == 3? true: false,
+          isSelected: point == 3 ? true : false,
         ),
         //const SizedBox(width: 8,),
         // 4
@@ -186,7 +209,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
             onPointSelect(4);
           },
           number: 4,
-          isSelected: point == 4? true : false,
+          isSelected: point == 4 ? true : false,
         ),
         //const SizedBox(width: 8,),
         // 5
@@ -196,7 +219,7 @@ Navigator.push(context, MaterialPageRoute(builder: (context)=>PhotoView(imagePro
             onPointSelect(5);
           },
           number: 5,
-          isSelected: point == 5? true : false,
+          isSelected: point == 5 ? true : false,
         ),
       ],
     );

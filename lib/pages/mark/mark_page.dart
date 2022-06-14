@@ -15,7 +15,6 @@ import '../../data/models/user.dart';
 import '../../utils/my_colors.dart';
 import '../../utils/my_routes.dart';
 import '../../utils/strings.dart';
-import '../../widgets/cirlce_image.dart';
 import '../../widgets/mark/doctor_list_item.dart';
 import '../../widgets/my_btn.dart';
 import '../../widgets/my_text.dart';
@@ -31,6 +30,7 @@ class MarkPage extends StatefulWidget {
 }
 
 class _MarkPageState extends State<MarkPage> {
+  final Kestate=GlobalKey();
 
   MarkController controller = Get.put(MarkController(
     userRepo: UserRepo(),
@@ -186,21 +186,26 @@ class _MarkPageState extends State<MarkPage> {
 //:
           return Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: DoctorListItem(
-              user: user,
-              point: user.authUserPoints,
-              onClick: () {
-_showInterstitialAd();
+            child: InkWell(
+              onTap: (){
+
               },
-              onPointSelect: (value) {
-                _showInterstitialAd();
-                // on points selected
-                // update points
-                controller.updatePoints(user, value);
-              },
-              onFilterClick: () {
-                _showInterstitialAd();
-              },
+              child: DoctorListItem(
+                user: user,
+                point: user.authUserPoints,
+                onClick: () {
+// _showInterstitialAd();
+                },
+                onPointSelect: (value) {
+                  // _showInterstitialAd();
+                  // on points selected
+                  // update points
+                  controller.updatePoints(user, value);
+                },
+                onFilterClick: () {
+                  // _showInterstitialAd();
+                },
+              ),
             ),
           );
         },

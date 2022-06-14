@@ -149,7 +149,9 @@ class _HomePageState extends State<HomePage> {
           Align(
             alignment: Alignment.topCenter,
             child: MyText(
-              text: Strings.appName.toUpperCase(),
+              text: Strings.appName
+
+              ,
               size: 24,
               color: MyColors.white,
               fontFamilty: "Roboto",
@@ -158,7 +160,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           Container(
-            margin: EdgeInsets.only(top: 2),
+            margin: EdgeInsets.only(top: 3),
               height: 50,
               child: Center(child: AdWidget(ad: myBanner!,))),
         ],
@@ -213,9 +215,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const Spacer(),
                             Image.asset(
-                              "assets/images/logo.png",
-                              width: 40,
-                              height: 40,
+                              "assets/images/Icon.png",
+                              width: 60,
+                              height: 70,
                             ),
                           ],
                         ),

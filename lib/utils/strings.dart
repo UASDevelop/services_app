@@ -1,7 +1,7 @@
 
 class Strings {
 
-  static const appName = "Mark App";
+  static const appName = "okayMark";
   static const loading = "Loading...";
   static const mobileNumber = "Mobile Number";
   static const authenticate = "Authenticate";
@@ -31,5 +31,6 @@ class Strings {
   static const shareToFriends = "Share to Friends";
   static const apply = "Apply";
   static const filter = "Filter";
+  
 
 }

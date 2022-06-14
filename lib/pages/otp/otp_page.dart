@@ -86,9 +86,9 @@ class OtpPage extends StatelessWidget {
               ),
             ),*/
             Image.asset(
-              "assets/images/logo.png",
-              width: 100,
-              height: 100,
+              "assets/images/logos.png",
+              width: 70,
+              height: 60,
             ),
             const SizedBox(height: 50,),
             MyText(
