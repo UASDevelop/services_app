@@ -43,6 +43,7 @@ dependencies:
   google_mobile_ads: ^1.2.0
   facebook_audience_network: ^1.0.1
   photo_view: ^0.14.0
+  google_sign_in: ^5.3.3
 
 
 
@@ -80,14 +81,10 @@ flutter:
     - assets/images/facebook.svg
     - assets/images/google.svg
     - assets/images/ok.svg
-    - assets/images/logo.png
     - assets/images/filter.jpeg
-    - assets/images/ic_launcher.png
-    - assets/images/logo6_13_7285.png
+    - assets/images/logo6_13_17923 (3).png
     - assets/images/logos.png
-    - assets/images/logo6_13_17923.png
-    - assets/images/Icon.png
-  #   - images/a_dot_ham.jpeg
+#     - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
