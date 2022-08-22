@@ -1,7 +1,10 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:services_app/data/repository/auth_repo.dart';
+import 'package:services_app/data/repository/user_repo.dart';
 import 'package:services_app/pages/login/login_controller.dart';
 import 'package:get/get.dart';
 import 'package:services_app/utils/my_colors.dart';
@@ -13,10 +16,41 @@ import 'package:services_app/widgets/my_btn.dart';
 import 'package:services_app/widgets/my_text.dart';
 import 'package:services_app/widgets/progress_view.dart';
 
-class LoginPage extends StatelessWidget {
+import '../home/home_page.dart';
+import 'emailsigin.dart';
 
+class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String usersCollection = "users";
+
+  Future<void> createUser(String id,String? email ) async {
+    var document = await firestore.collection(usersCollection).doc(auth.currentUser!.uid).get();
+    if (document.exists) {
+      return;
+    }else {
+      try {
+        await firestore.collection(usersCollection).doc(auth.currentUser!.uid).set({
+          "id":auth.currentUser!.uid,
+          "email": auth.currentUser!.email,
+        });
+      } catch (e) {
+        throw e.toString();
+      }
+    }
+  }
+  GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+    ],
+  );
   LoginController controller = Get.put(LoginController(
     authRepo: AuthRepo(),
   ));
@@ -30,30 +64,59 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+  Future<void> handleSignIn() async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    try {
+      var user = await _googleSignIn.signIn();
+      print(user?.email);
+      print(user?.displayName);
+      print(user?.photoUrl);
+      if (user != null) {
+          navigateToHomePagese();
+
+
+
+        GoogleSignInAuthentication _auhentication = await user.authentication;
+        AuthCredential _credential = GoogleAuthProvider.credential(
+            idToken: _auhentication.idToken,
+            accessToken: _auhentication.accessToken);
+        UserCredential result = await _auth.signInWithCredential(_credential);
+        print(_credential);
+        FirebaseAuth auth= FirebaseAuth.instance;
+        return createUser(auth.currentUser!.uid, auth.currentUser!.email);
+
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
 
   // build body weather show progress or main body contents
   Widget buildBody() {
-    return Obx(() =>
-        controller.isProgressEnabled.value? ProgressView() : buildMainBody(),
+    return Obx(
+      () =>
+          controller.isProgressEnabled.value ? ProgressView() : buildMainBody(),
     );
   }
 
   // build main body contents
   Widget buildMainBody() {
-    return LayoutBuilder(builder: (context, constraints) {
-      return SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: constraints.maxHeight),
-          child: IntrinsicHeight(
-            child: Column(
-              children: [
-                buildHeader(),
-                buildForm(),
-              ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: IntrinsicHeight(
+              child: Column(
+                children: [
+                  buildHeader(),
+                  buildForm(),
+                ],
+              ),
             ),
           ),
-        ),
-      );
+        );
       },
     );
   }
@@ -83,10 +146,10 @@ class LoginPage extends StatelessWidget {
             ),*/
             Image.asset(
               "assets/images/logos.png",
-              width: 90,
-              height: 60,
+              width: 170,
+              height: 130,
             ),
-            const SizedBox(height: 30,),
+            
             MyText(
               text: Strings.mobileNumber,
               size: 16,
@@ -94,7 +157,9 @@ class LoginPage extends StatelessWidget {
               fontFamilty: "Roboto",
               fontWeight: FontWeight.w700,
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             MyText(
               text: "We need to send OTP to authenticate your number",
               size: 13,
@@ -114,7 +179,9 @@ class LoginPage extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: MyColors.white,
-          borderRadius: const BorderRadius.only(topLeft: Radius.circular(50),),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(50),
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -138,24 +205,64 @@ class LoginPage extends StatelessWidget {
                     controller.countryCode.value = value;
                   },
                 ),
-                const SizedBox(height: 20,),
-                // Authenticate button
-                MyBtn(
-                  onClick: () {
-                    print("on authenticate");
-                    // on authenticate
-                    onAuthenticate();
-                  },
-                  label: Strings.authenticate,
-                  color: MyColors.primaryColor,
+                const SizedBox(
+                  height: 20,
                 ),
-                const SizedBox(height: 30,),
+                // Authenticate button
+                Padding(
+                  padding: const EdgeInsets.only(left: 14),
+                  child: Row(
+                    children: [
+                      MyBtn(
+                        onClick: () {
+                          print("on authenticate");
+                          // on authenticate
+                          onAuthenticate();
+                        },
+                        label: Strings.authenticate,
+                        color: MyColors.primaryColor,
+                      ),
+                      SizedBox(width: 10,),
+                      Emailpassword()
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 //buildSocialLogins(),
+          Container(
+            height: 50,
+            width: 290,
+            child: FlatButton(
+              color: MyColors.primaryColor,
+                onPressed: (){
+                  handleSignIn();
+                },
+              child: Text(Strings.googlename,style: TextStyle(color: MyColors.white),),
+            ),
+          ),
+
+                SizedBox(width: 25,),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget Emailpassword() {
+    return MyBtn(
+      onClick: () {
+        print("Email singin");
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>
+            emailloginpage()
+        ));
+
+      },
+      label: Strings.emailpasword,
+      color: MyColors.primaryColor,
     );
   }
 
@@ -202,11 +309,12 @@ class LoginPage extends StatelessWidget {
       ],
     );
   }*/
-
-  // check data validation and then authenticate(navigate to OTP page)
   void onAuthenticate() {
     if (controller.validate()) {
       controller.authenticate();
     }
+  }
+   navigateToHomePagese() {
+    MyRoutes.navigateToHomePage();
   }
 }
